@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>你的四週調養日曆｜蒔補煲心</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;900&family=Noto+Sans+TC:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #2A1F14;
+  --brown: #7B4F2E;
+  --brown-light: #9B6A42;
+  --gold: #C4956A;
+  --gold-light: #D4A97A;
+  --cream: #F5EBE0;
+  --pale: #FBF7F3;
+  --smoke: #E8DDD3;
+  --teal: #2E6B58;
+  --teal-light: #3D8870;
+  --red: #8B2E2E;
+  --muted: #7A6A5A;
+  --week1: #7B4F2E;
+  --week23: #3D2B1A;
+  --week4: #2E6B58;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 300;
+  background: var(--pale);
+  color: var(--ink);
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+
+/* ── GRAIN TEXTURE ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.4;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 32px;
+  position: relative;
+  background: var(--ink);
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(196,149,106,0.12) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, rgba(123,79,46,0.15) 0%, transparent 50%);
+}
+
+.hero-rings {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.hero-rings span {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(196,149,106,0.15);
+  animation: breathe 8s ease-in-out infinite;
+}
+.hero-rings span:nth-child(1) { width: 300px; height: 300px; animation-delay: 0s; }
+.hero-rings span:nth-child(2) { width: 500px; height: 500px; animation-delay: 1s; border-color: rgba(196,149,106,0.1); }
+.hero-rings span:nth-child(3) { width: 700px; height: 700px; animation-delay: 2s; border-color: rgba(196,149,106,0.06); }
+.hero-rings span:nth-child(4) { width: 900px; height: 900px; animation-delay: 3s; border-color: rgba(196,149,106,0.04); }
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.03); opacity: 0.7; }
+}
+
+.hero-eyebrow {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  letter-spacing: 5px;
+  color: var(--gold);
+  opacity: 0.8;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  position: relative;
+  animation: fadeUp 1s ease both;
+}
+
+.hero-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: clamp(32px, 7vw, 56px);
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.4;
+  margin-bottom: 24px;
+  position: relative;
+  animation: fadeUp 1s 0.2s ease both;
+}
+
+.hero-title em {
+  font-style: normal;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.hero-sub {
+  font-size: clamp(15px, 2.5vw, 18px);
+  color: rgba(245,235,224,0.6);
+  max-width: 400px;
+  margin: 0 auto 48px;
+  position: relative;
+  animation: fadeUp 1s 0.4s ease both;
+  font-weight: 300;
+}
+
+.hero-divider {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  margin: 0 auto 32px;
+  animation: fadeUp 1s 0.6s ease both;
+}
+
+.hero-scroll {
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: rgba(196,149,106,0.6);
+  text-transform: uppercase;
+  animation: fadeUp 1s 0.8s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── OPENING MESSAGE ── */
+.opening {
+  padding: 80px 32px;
+  max-width: 620px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.opening-quote {
+  font-family: 'Noto Serif TC', serif;
+  font-size: clamp(18px, 3vw, 24px);
+  font-weight: 300;
+  color: var(--brown);
+  line-height: 2;
+  margin-bottom: 32px;
+}
+
+.opening-quote strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.opening-note {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.9;
+}
+
+/* ── SECTION COMMON ── */
+.section {
+  padding: 72px 24px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: clamp(22px, 4vw, 32px);
+  font-weight: 600;
+  color: var(--brown);
+  margin-bottom: 40px;
+  line-height: 1.4;
+}
+
+/* ── WEEK CARDS ── */
+.weeks {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.week-card {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 24px rgba(42,31,20,0.07);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.week-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 40px rgba(42,31,20,0.12);
+}
+
+.week-header {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  min-height: 120px;
+}
+
+.week-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 20px 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.week-badge::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.08) 0%, transparent 70%);
+}
+
+.week-badge .num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px;
+  font-weight: 300;
+  color: rgba(245,235,224,0.9);
+  line-height: 1;
+}
+
+.week-badge .label {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.week-badge .char {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 18px;
+  color: rgba(245,235,224,0.5);
+  margin-top: 4px;
+}
+
+.week-content {
+  background: white;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: none;
+}
+
+.week-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.week-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+
+.week-product {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--pale);
+  border: 1px solid var(--smoke);
+  border-radius: 24px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--brown);
+  font-family: 'Noto Serif TC', serif;
+}
+
+.week-product .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Week colours */
+.w1 .week-badge { background: var(--week1); }
+.w1 .week-title { color: var(--week1); }
+.w1 .week-product .dot { background: var(--week1); }
+
+.w23 .week-badge { background: var(--week23); }
+.w23 .week-title { color: var(--week23); }
+.w23 .week-product .dot { background: var(--week23); }
+
+.w4 .week-badge { background: var(--week4); }
+.w4 .week-title { color: var(--week4); }
+.w4 .week-product .dot { background: var(--week4); }
+
+/* ── TIMELINE EXPANDED ── */
+.timeline {
+  background: var(--cream);
+  border-radius: 20px;
+  padding: 40px 32px;
+  margin-top: 48px;
+}
+
+.timeline-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--brown);
+  margin-bottom: 32px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.timeline-track {
+  position: relative;
+  padding-left: 28px;
+}
+
+.timeline-track::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--week1), var(--week23), var(--week4));
+  border-radius: 1px;
+}
+
+.tl-item {
+  position: relative;
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--smoke);
+}
+
+.tl-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.tl-dot {
+  position: absolute;
+  left: -28px;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 0 2px currentColor;
+}
+
+.tl-item.d1 .tl-dot { background: var(--week1); color: var(--week1); }
+.tl-item.d2 .tl-dot { background: var(--week23); color: var(--week23); }
+.tl-item.d3 .tl-dot { background: var(--week4); color: var(--week4); }
+
+.tl-week {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-family: 'Cormorant Garamond', serif;
+  margin-bottom: 6px;
+}
+
+.tl-head {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.tl-body {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.9;
+}
+
+/* ── DO & DONT ── */
+.do-dont {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 48px;
+}
+
+@media (max-width: 560px) {
+  .do-dont { grid-template-columns: 1fr; }
+}
+
+.do-box, .dont-box {
+  border-radius: 14px;
+  padding: 28px 24px;
+}
+
+.do-box {
+  background: linear-gradient(135deg, rgba(46,107,88,0.06), rgba(46,107,88,0.02));
+  border: 1px solid rgba(46,107,88,0.15);
+}
+
+.dont-box {
+  background: linear-gradient(135deg, rgba(139,46,46,0.06), rgba(139,46,46,0.02));
+  border: 1px solid rgba(139,46,46,0.12);
+}
+
+.do-box h4 { color: var(--teal); }
+.dont-box h4 { color: var(--red); }
+
+.do-dont h4 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.do-dont ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.do-dont ul li {
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.7;
+  padding-left: 16px;
+  position: relative;
+}
+
+.do-box ul li::before { content: '‧'; position: absolute; left: 0; color: var(--teal); }
+.dont-box ul li::before { content: '‧'; position: absolute; left: 0; color: var(--red); }
+
+/* ── WARM NOTES ── */
+.warm-notes {
+  background: var(--ink);
+  padding: 72px 32px;
+  text-align: center;
+}
+
+.warm-inner {
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.warm-line {
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  margin: 0 auto 32px;
+  opacity: 0.5;
+}
+
+.warm-text {
+  font-family: 'Noto Serif TC', serif;
+  font-size: clamp(17px, 3vw, 22px);
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 2;
+  margin-bottom: 32px;
+}
+
+.warm-text em {
+  font-style: normal;
+  color: var(--gold);
+}
+
+.warm-sub {
+  font-size: 14px;
+  color: rgba(245,235,224,0.5);
+  line-height: 1.9;
+}
+
+/* ── WARNING ── */
+.warning-section {
+  padding: 48px 24px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.warning-box {
+  background: #FEF5F5;
+  border: 1px solid rgba(139,46,46,0.15);
+  border-left: 4px solid var(--red);
+  border-radius: 12px;
+  padding: 28px 28px;
+}
+
+.warning-box h4 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--red);
+  margin-bottom: 16px;
+}
+
+.warning-box ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.warning-box ul li {
+  font-size: 14px;
+  color: #6b3030;
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.7;
+}
+
+.warning-box ul li::before {
+  content: '！';
+  position: absolute;
+  left: 0;
+  color: var(--red);
+  font-size: 12px;
+}
+
+/* ── FAQ ── */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--smoke);
+  cursor: pointer;
+}
+
+.faq-q {
+  padding: 22px 0;
+  font-family: 'Noto Serif TC', serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--brown);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  user-select: none;
+}
+
+.faq-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid var(--smoke);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  color: var(--gold);
+}
+
+.faq-item.open .faq-icon {
+  background: var(--brown);
+  border-color: var(--brown);
+  color: white;
+  transform: rotate(45deg);
+}
+
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.9;
+}
+
+.faq-item.open .faq-a {
+  max-height: 400px;
+  padding-bottom: 20px;
+}
+
+/* ── CONTACT ── */
+.contact-section {
+  background: var(--cream);
+  padding: 64px 32px;
+  text-align: center;
+}
+
+.contact-inner {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.contact-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--brown);
+  margin-bottom: 12px;
+}
+
+.contact-sub {
+  font-size: 15px;
+  color: var(--muted);
+  margin-bottom: 32px;
+  line-height: 1.8;
+}
+
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--brown);
+  color: var(--cream);
+  padding: 16px 32px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-family: 'Noto Serif TC', serif;
+  font-size: 15px;
+  letter-spacing: 1px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.contact-btn:hover {
+  background: #5a3820;
+  transform: translateY(-1px);
+}
+
+/* ── FOOTER ── */
+.foot {
+  padding: 40px 32px;
+  text-align: center;
+  border-top: 1px solid var(--smoke);
+}
+
+.foot-brand {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--brown);
+  margin-bottom: 8px;
+}
+
+.foot-note {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.9;
+}
+
+/* ── PROGRESS BAR ── */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--brown), var(--gold));
+  transition: width 0.1s linear;
+  z-index: 999;
+}
+
+/* ── NAV DOTS ── */
+.nav-dots {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 100;
+}
+
+.nav-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--smoke);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-dot.active {
+  background: var(--brown);
+  transform: scale(1.5);
+}
+
+@media (max-width: 600px) {
+  .nav-dots { display: none; }
+  .week-header { grid-template-columns: 80px 1fr; }
+  .week-badge .num { font-size: 32px; }
+  .timeline { padding: 28px 20px; }
+  .do-dont { grid-template-columns: 1fr; }
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+</style>
+</head>
+<body>
+
+<!-- 進度條 -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- 導航點 -->
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-target="hero" title="開始"></div>
+  <div class="nav-dot" data-target="weeks" title="四週日曆"></div>
+  <div class="nav-dot" data-target="detail" title="詳細說明"></div>
+  <div class="nav-dot" data-target="dodont" title="注意事項"></div>
+  <div class="nav-dot" data-target="faq" title="常見問題"></div>
+  <div class="nav-dot" data-target="contact" title="聯繫我們"></div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="hero">
+  <div class="hero-rings">
+    <span></span><span></span><span></span><span></span>
+  </div>
+  <div class="hero-eyebrow">蒔補煲心 · 顧客專屬</div>
+  <h1 class="hero-title">
+    你已經在<em>照顧自己</em>了。<br>
+    這是接下來四週的節奏。
+  </h1>
+  <p class="hero-sub">不需要自己研究，按照這個順序，讓身體慢慢回來。</p>
+  <div class="hero-divider"></div>
+  <p class="hero-scroll">往下開始</p>
+</section>
+
+<!-- ══ OPENING MESSAGE ══ -->
+<div class="opening reveal">
+  <p class="opening-quote">
+    小產後的身體，正在依序做三件事：<br>
+    <strong>先排，再補，最後調。</strong><br>
+    這三件事有順序，不能跳過。<br>
+    我們幫你把每一步都準備好了。
+  </p>
+  <p class="opening-note">
+    這個頁面是專門為已經購買組合包的你設計的。<br>
+    每週打開對照一次就好，不需要一次全部讀完。
+  </p>
+</div>
+
+<!-- ══ WEEK CARDS ══ -->
+<section class="section" id="weeks">
+  <div class="section-label">你的調養日曆</div>
+  <h2 class="section-title">四週，一步一步來</h2>
+
+  <div class="weeks">
+
+    <!-- 第一週 -->
+    <div class="week-card w1 reveal">
+      <div class="week-header">
+        <div class="week-badge">
+          <div class="num">一</div>
+          <div class="label">Week</div>
+          <div class="char">排</div>
+        </div>
+        <div class="week-content">
+          <div class="week-title">暖宮促排，讓身體先做自己的事</div>
+          <div class="week-desc">
+            術後第1–7天。這週不補，身體在全力排出惡露，你的任務是配合它，而不是打斷它。清淡溫熱為主，好好休息。
+          </div>
+          <div class="week-product">
+            <span class="dot"></span>
+            本週使用：調養茶包 A（暖宮促排）
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第二三週 -->
+    <div class="week-card w23 reveal">
+      <div class="week-header">
+        <div class="week-badge">
+          <div class="num" style="font-size:28px; line-height:1.2;">二<br>三</div>
+          <div class="label">Week</div>
+          <div class="char">補</div>
+        </div>
+        <div class="week-content">
+          <div class="week-title">氣血雙補，用八珍打底</div>
+          <div class="week-desc">
+            術後第8–21天。惡露明顯減少之後，才是真正補的時機。氣虛與血虛往往同時存在，八珍湯氣血同補，吸收效率更好。
+          </div>
+          <div class="week-product">
+            <span class="dot"></span>
+            本週使用：八珍藥膳純藥湯 300ml（冷凍包）
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第四週 -->
+    <div class="week-card w4 reveal">
+      <div class="week-header">
+        <div class="week-badge">
+          <div class="num">四</div>
+          <div class="label">Week</div>
+          <div class="char">調</div>
+        </div>
+        <div class="week-content">
+          <div class="week-title">固根本，讓補進去的東西沉澱</div>
+          <div class="week-desc">
+            術後第22–30天。最後一週不是繼續補，而是讓前三週的成果真正沉澱成體質的一部分，為日後的備孕或生活打好底子。
+          </div>
+          <div class="week-product">
+            <span class="dot"></span>
+            本週使用：調養茶包 B（固元調養）
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ DETAIL TIMELINE ══ -->
+<section class="section" id="detail" style="padding-top:0">
+  <div class="timeline reveal">
+    <div class="timeline-title">每週詳細說明</div>
+    <div class="timeline-track">
+
+      <div class="tl-item d1 reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-week">第一週 · Day 1–7</div>
+        <div class="tl-head">茶包 A 怎麼喝</div>
+        <div class="tl-body">
+          每日一包，熱水沖泡悶5分鐘，溫熱飲用。可在早餐後或任何感覺身體需要溫暖的時候喝。不需要空腹，飯後喝也可以。<br><br>
+          配合飲食：清燉雞湯、溫熱米粥、山藥粥。忌生冷、冰飲、人參、麻油雞。
+        </div>
+      </div>
+
+      <div class="tl-item d2 reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-week">第二～三週 · Day 8–21</div>
+        <div class="tl-head">冷凍藥湯怎麼用</div>
+        <div class="tl-body">
+          從冷凍庫取出，放入冷藏退冰約4–6小時（或前一晚放冷藏）。食用前隔水加熱或小火慢熱至溫熱，不需要煮沸。<br><br>
+          搭配正餐一起食用效果最好。純藥湯是漢方精華，建議搭配你的調養餐——粥、清蒸魚、溫熱便當都適合。<br><br>
+          每日一包，連續使用14天。
+        </div>
+      </div>
+
+      <div class="tl-item d3 reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-week">第四週 · Day 22–30</div>
+        <div class="tl-head">茶包 B 怎麼喝</div>
+        <div class="tl-body">
+          每日一包，熱水沖泡悶5分鐘。花旗參性涼補氣，適合大部分體質。陳皮與炙甘草調和脾胃，讓前三週補進去的東西真正穩固。<br><br>
+          這週可以開始少量嘗試一些平常喜歡的食物，身體已經有了基礎，不需要太嚴格限制。
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ DO & DONT ══ -->
+<section class="section" id="dodont" style="padding-top:0">
+  <div class="section-label">注意事項</div>
+  <h2 class="section-title">整個調養期間的<br>基本原則</h2>
+
+  <div class="do-dont">
+    <div class="do-box reveal">
+      <h4>✓ &nbsp;可以做的</h4>
+      <ul>
+        <li>洗頭洗澡，洗完立刻吹乾</li>
+        <li>保持室內溫暖，腹部保暖</li>
+        <li>情緒流動——允許自己難過</li>
+        <li>第三週後可輕量室內散步</li>
+        <li>有任何疑問隨時私訊我們</li>
+      </ul>
+    </div>
+    <div class="dont-box reveal">
+      <h4>‧ &nbsp;要避免的</h4>
+      <ul>
+        <li>前兩週不搬重物、不劇烈運動</li>
+        <li>出血期間不泡澡，只淋浴</li>
+        <li>冷氣不直吹身體</li>
+        <li>第一週禁人參、麻油雞、冰飲</li>
+        <li>不要強迫自己「快點好起來」</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WARM QUOTE ══ -->
+<div class="warm-notes reveal">
+  <div class="warm-inner">
+    <div class="warm-line"></div>
+    <p class="warm-text">
+      不管這件事有沒有人知道，<br>
+      <em>你值得被好好照顧。</em><br><br>
+      這包湯，是我們想送到你手上的<br>
+      一件事。
+    </p>
+    <div class="warm-line"></div>
+    <p class="warm-sub">
+      蒔補煲心・南投三十年中藥行傳承<br>
+      台中北屯門市
+    </p>
+  </div>
+</div>
+
+<!-- ══ WARNING ══ -->
+<div class="warning-section reveal">
+  <div class="warning-box">
+    <h4>以下狀況請立即就醫，不要只觀察</h4>
+    <ul>
+      <li>惡露超過四週仍有鮮紅出血</li>
+      <li>出血伴隨異味或發燒</li>
+      <li>下腹持續疼痛未緩解</li>
+      <li>小產後超過兩個月月經仍未恢復</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══ FAQ ══ -->
+<section class="section" id="faq">
+  <div class="section-label">你可能想知道的</div>
+  <h2 class="section-title">常見問題</h2>
+
+  <div class="faq-list reveal">
+
+    <div class="faq-item">
+      <div class="faq-q">
+        冷凍包退冰後可以放多久？
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        退冰後放冷藏，建議24小時內食用完畢。如果來不及當天用，可以重新放回冷凍保存，但盡量避免反覆解凍，每包只解凍一次為佳。
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">
+        可以跟西醫開的藥一起用嗎？
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        可以，但建議間隔1–2小時服用，避免交互影響。如果醫師有開子宮收縮劑，第一週的茶包建議告知你的中醫師確認是否同步使用，以免功效重疊。
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">
+        我有習慣性流產體質，這個組合適合嗎？
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        組合包的設計是適合大部分小產後的基礎調養。習慣性流產的狀況較為複雜，建議同步諮詢婦科醫師或中醫師，我們也可以透過私訊協助你確認是否適用。
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">
+        惡露已經結束了，可以從第二週開始用嗎？
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        如果惡露在第一週內就已乾淨，可以提早開始第二週的冷凍包。但建議第一週的茶包A還是喝完，裡面的暖宮配伍對子宮恢復有幫助，不只是為了排惡露。
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">
+        可以哭嗎？情緒低落怎麼辦？
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a">
+        可以哭。情緒的疏通比壓抑更重要，把難過悶在心裡對身體的傷害反而更大。允許自己難過，然後再慢慢走出來——這才是健康的歷程。如果你感覺需要有人說說話，也歡迎私訊我們，我們會認真回應。
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<div class="contact-section reveal" id="contact">
+  <div class="contact-inner">
+    <div class="contact-title">有任何問題，找我們</div>
+    <p class="contact-sub">
+      不管是使用方式、體質疑問，或是只是想說說心裡的話——<br>
+      我們都在，也都會認真回答。
+    </p>
+    <a href="https://soup-broth.com" class="contact-btn">
+      前往官網 / 私訊蒔補煲心
+    </a>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="foot">
+  <div class="foot-brand">蒔補煲心</div>
+  <p class="foot-note">
+    本品為漢方食補，非藥品，不具醫療效果。<br>
+    如有不適或異常症狀，請諮詢婦科醫師。<br>
+    © 蒔補煲心湯｜台中北屯｜soup-broth.com
+  </p>
+</footer>
+
+<script>
+// 進度條
+const bar = document.getElementById('progressBar');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = (window.scrollY / (h.scrollHeight - h.clientHeight)) * 100;
+  bar.style.width = pct + '%';
+});
+
+// FAQ accordion
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.querySelector('.faq-q').addEventListener('click', () => {
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+reveals.forEach(el => observer.observe(el));
+
+// Nav dots
+const sections = ['hero','weeks','detail','dodont','faq','contact'];
+const dots = document.querySelectorAll('.nav-dot');
+
+dots.forEach((dot, i) => {
+  dot.addEventListener('click', () => {
+    document.getElementById(sections[i]).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+const sectionObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const idx = sections.indexOf(e.target.id);
+      if (idx !== -1) {
+        dots.forEach(d => d.classList.remove('active'));
+        dots[idx]?.classList.add('active');
+      }
+    }
+  });
+}, { threshold: 0.4 });
+
+sections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) sectionObserver.observe(el);
+});
+</script>
+
+</body>
+</html>
