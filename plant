@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FAF6F0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="蒔一棵植物">
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22%E8%92%94%E4%B8%80%E6%A3%B5%E6%A4%8D%E7%89%A9%22%2C%22short_name%22%3A%22%E8%92%94%E4%B8%80%E6%A3%B5%E6%A4%8D%E7%89%A9%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23FAF6F0%22%2C%22theme_color%22%3A%22%23FAF6F0%22%7D">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%235C4434'/%3E%3Ccircle cx='50' cy='58' r='16' fill='%23E8B4BC'/%3E%3Cpath d='M50 58 V38' stroke='%237A9B7E' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M50 48 Q36 42 32 28 Q46 30 50 44' fill='%238FB394'/%3E%3Cpath d='M50 48 Q64 42 68 28 Q54 30 50 44' fill='%237A9B7E'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%235C4434'/%3E%3Ccircle cx='50' cy='58' r='16' fill='%23E8B4BC'/%3E%3Cpath d='M50 58 V38' stroke='%237A9B7E' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M50 48 Q36 42 32 28 Q46 30 50 44' fill='%238FB394'/%3E%3Cpath d='M50 48 Q64 42 68 28 Q54 30 50 44' fill='%237A9B7E'/%3E%3C/svg%3E">
+<title>蒔一棵植物｜30天陪伴・蒔補煲心</title>
+<meta name="description" content="接下來的三十天，我們陪你蒔一棵植物。它會跟著你一天一天慢慢長，就像你正在慢慢好起來。">
+<!-- ============================================================
+  蒔補煲心｜蒔一棵植物 v3.0
+  新增：四季花種對應種下月份｜開花花瓣綻放動畫｜30天回顧卡（canvas生成可下載）
+  部署：GitHub Pages。給接續模型：TODO 標記處可擴充；法規見 Shibu_Handbook.md
+  禁：補氣血/暖宮/活血/療效/修復｜語感：短句、不說教、不強迫正向
+============================================================ -->
+<style>
+:root{--ink:#2A1F14;--brown:#5C4434;--brown2:#8B6F47;--gold:#C89B6C;--gold-l:#E8D5B8;--cream:#FAF6F0;--cream2:#F5EDE0;--green:#7A9B7E;--green-d:#3D6B5A;--red:#8B3A2E;--smoke:#E8DDD3}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:"Noto Serif TC","PingFang TC","Microsoft JhengHei",serif;background:linear-gradient(180deg,#FAF6F0 0%,#F3EADC 100%);min-height:100vh;color:var(--ink);line-height:1.9}
+.wrap{max-width:480px;margin:0 auto;padding:0 20px 60px}
+.hidden{display:none!important}
+.fade{animation:fade .8s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+#onboard{text-align:center;padding-top:14vh}
+#onboard .logo{color:var(--brown2);letter-spacing:4px;font-size:.85em}
+#onboard h1{color:var(--brown);font-size:1.6em;font-weight:600;margin:18px 0 6px;line-height:1.6}
+#onboard .intro{color:#6b5746;font-size:.98em;margin:18px 0 30px;line-height:2.1}
+#onboard input[type=date]{width:100%;max-width:280px;padding:13px;border:1px solid var(--smoke);border-radius:12px;font-family:inherit;font-size:1em;background:#fff;text-align:center;color:var(--brown)}
+#onboard .note{font-size:.8em;color:#9a8a7a;margin-top:10px}
+.btn{display:inline-block;background:var(--brown2);color:#fff;border:0;border-radius:26px;padding:13px 40px;font-family:inherit;font-size:1.02em;cursor:pointer;margin-top:22px;letter-spacing:2px;transition:.3s}
+.btn:active{transform:scale(.97)}
+
+#main{padding-top:26px}
+.greet{text-align:center;color:var(--brown2);font-size:.9em;letter-spacing:1px}
+.daybar{text-align:center;margin:6px 0 4px}
+.daybar b{color:var(--brown);font-size:1.35em;font-weight:600;letter-spacing:1px}
+.stage-name{text-align:center;color:var(--gold);font-size:.85em;letter-spacing:3px}
+
+.stage{position:relative;height:300px;margin:8px auto 0;max-width:340px}
+.stage svg{width:100%;height:100%}
+.sway{transform-origin:170px 250px;animation:sway 3.2s ease-in-out}
+@keyframes sway{0%,100%{transform:rotate(0)}25%{transform:rotate(2.2deg)}60%{transform:rotate(-1.8deg)}}
+.sparkle{position:absolute;font-size:1.1em;animation:sp 1.6s ease forwards;pointer-events:none}
+@keyframes sp{0%{opacity:0;transform:translateY(6px) scale(.6)}30%{opacity:1}100%{opacity:0;transform:translateY(-34px) scale(1.15)}}
+.petal{transform-box:fill-box;transform-origin:center;animation:bloom 1.1s cubic-bezier(.34,1.4,.64,1) both}
+@keyframes bloom{0%{transform:scale(0) rotate(-30deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+
+.card{background:#fff;border:1px solid var(--smoke);border-radius:18px;padding:24px 22px;margin:16px 0;box-shadow:0 3px 16px rgba(139,111,71,.07)}
+.letter-head{color:var(--gold);font-size:.82em;letter-spacing:3px;text-align:center;margin-bottom:12px}
+.letter{color:#4a3d33;font-size:1.02em;line-height:2.2;text-align:center;white-space:pre-line}
+.water-zone{text-align:center;margin:18px 0 6px}
+.water-zone.needs{position:relative}
+.drop-hint{font-size:1.8em;display:inline-block;margin-bottom:2px;animation:dropbounce 1.8s ease-in-out infinite}
+@keyframes dropbounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.water-btn{background:none;border:1.5px solid var(--gold);color:var(--brown);border-radius:30px;padding:15px 38px;font-family:inherit;font-size:1.08em;cursor:pointer;letter-spacing:2px;transition:.3s;position:relative}
+.water-btn.needs{background:linear-gradient(135deg,#FFF9EE,#FDF0DC);border:2px solid var(--gold);box-shadow:0 0 0 0 rgba(200,155,108,.5);animation:pulse 2.2s ease-in-out infinite;font-weight:700}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(200,155,108,.45)}70%{box-shadow:0 0 0 14px rgba(200,155,108,0)}100%{box-shadow:0 0 0 0 rgba(200,155,108,0)}}
+.water-btn:active{transform:scale(.96)}
+.water-btn.done{border-color:var(--green);color:var(--green-d);pointer-events:none;background:none;animation:none}
+.water-sub{font-size:.78em;color:#b08a5a;margin-top:8px;letter-spacing:1px}
+.care{overflow:hidden;max-height:0;transition:max-height .9s ease}
+.care.open{max-height:720px}
+.care h3{color:var(--brown);font-size:1em;margin:16px 0 8px}
+.care ul{list-style:none}
+.care li{padding:6px 0;border-bottom:1px dashed var(--smoke);font-size:.95em;color:#4a3d33}
+.care li:last-child{border:0}
+.ok{color:var(--green-d)}.no{color:var(--red)}
+.care .fine{font-size:.78em;color:#9a8a7a;margin-top:10px}
+
+.journal textarea{width:100%;border:1px solid var(--smoke);border-radius:12px;background:var(--cream);padding:12px;font-family:inherit;font-size:.95em;resize:none;height:64px;color:var(--ink)}
+.journal .hint{font-size:.78em;color:#9a8a7a;margin-top:8px;text-align:center}
+.saved{color:var(--green-d);font-size:.82em;text-align:center;margin-top:6px;min-height:1.2em}
+
+details.drawer{border:1px solid var(--smoke);border-radius:14px;background:#fff;padding:0;margin:12px 0;overflow:hidden}
+details.drawer summary{padding:15px 20px;color:var(--brown);font-size:.95em;cursor:pointer;list-style:none;letter-spacing:1px}
+details.drawer summary::-webkit-details-marker{display:none}
+details.drawer .inner{padding:4px 20px 18px;font-size:.92em;color:#4a3d33}
+.warn{background:#FAEEEA;border-left:3px solid var(--red);border-radius:8px;padding:12px 14px;margin:8px 0;font-size:.9em}
+.qa{border-bottom:1px dashed var(--smoke);padding:8px 0}
+.qa b{color:var(--brown);font-weight:600}
+.linkline{text-align:center;margin-top:12px}
+.linkline a{color:var(--brown2);font-size:.9em}
+.foot{text-align:center;font-size:.74em;color:#a99a8a;padding:26px 12px 10px;line-height:1.8}
+
+.confetti{position:fixed;top:-20px;font-size:1.4em;pointer-events:none;animation:fall linear forwards;z-index:200}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:.2}}
+
+#reviewBtn{display:block;margin:6px auto 0}
+.modal{position:fixed;inset:0;background:rgba(42,31,20,.55);display:flex;align-items:center;justify-content:center;z-index:300;padding:20px}
+.modal-box{background:var(--cream);border-radius:20px;padding:20px;max-width:360px;width:100%;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.25)}
+.modal-box canvas{width:100%;border-radius:14px;box-shadow:0 4px 18px rgba(139,111,71,.2)}
+.modal-actions{display:flex;gap:10px;margin-top:16px}
+.modal-actions button{flex:1;border:0;border-radius:22px;padding:12px;font-family:inherit;font-size:.95em;cursor:pointer}
+.modal-actions .save{background:var(--brown2);color:#fff}
+.modal-actions .close{background:none;border:1px solid var(--smoke);color:var(--brown2)}
+</style>
+</head>
+<body>
+
+<section id="onboard" class="wrap fade">
+  <div class="logo">蒔補煲心 SHIBU</div>
+  <h1>接下來的三十天，<br>我們陪你蒔一棵植物。</h1>
+  <p class="intro">「蒔」，是栽種的意思。<br>它會跟著你，一天一天慢慢長。<br>不用照顧得很完美——<br>它不會枯萎，只會等你。</p>
+  <input type="date" id="d0">
+  <p class="note">選擇那一天的日期（手術或藥流以當日計，自然流產以出血日計）<br>這個日期只存在你的手機裡，不會傳給任何人。</p><br>
+  <button class="btn" onclick="start()">開始陪伴</button>
+</section>
+
+<section id="main" class="wrap hidden">
+  <div class="greet" id="greet"></div>
+  <div class="daybar"><b id="dayTxt"></b></div>
+  <div class="stage-name" id="stageName"></div>
+
+  <div class="stage" id="stageBox">
+    <svg viewBox="0 0 340 300" id="plant" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="170" cy="262" rx="86" ry="14" fill="#E4D6C2"/>
+      <path d="M110 250 Q112 292 170 292 Q228 292 230 250 Z" fill="#B98A58"/>
+      <path d="M104 244 h132 l-6 14 H110 Z" fill="#C89B6C"/>
+      <ellipse cx="170" cy="246" rx="60" ry="8" fill="#6B4F35"/>
+      <g id="g1"><ellipse cx="170" cy="242" rx="7" ry="9" fill="#8B6F47"/><path d="M170 233 q4 -6 8 -7" stroke="#8B6F47" stroke-width="2" fill="none"/></g>
+      <g id="g2"><path d="M170 246 V216" stroke="#7A9B7E" stroke-width="4" stroke-linecap="round"/><path d="M170 220 Q152 212 148 196 Q166 198 170 216" fill="#8FB394"/><path d="M170 220 Q188 212 192 196 Q174 198 170 216" fill="#7A9B7E"/></g>
+      <g id="g3"><path d="M170 246 V176" stroke="#6E9273" stroke-width="5" stroke-linecap="round"/><path d="M170 214 Q142 206 134 184 Q162 186 170 208" fill="#8FB394"/><path d="M170 214 Q198 206 206 184 Q178 186 170 208" fill="#7A9B7E"/><path d="M170 190 Q148 182 142 164 Q166 168 170 184" fill="#9CBD9F"/></g>
+      <g id="g4"><path d="M170 246 V140" stroke="#618465" stroke-width="6" stroke-linecap="round"/><path d="M170 200 Q134 190 124 162 Q160 166 170 192" fill="#8FB394"/><path d="M170 200 Q206 190 216 162 Q180 166 170 192" fill="#7A9B7E"/><path d="M170 168 Q144 158 138 138 Q164 144 170 162" fill="#9CBD9F"/><path d="M170 168 Q196 158 202 138 Q176 144 170 162" fill="#8FB394"/></g>
+      <g id="g5"><path d="M170 140 V118" stroke="#618465" stroke-width="5" stroke-linecap="round"/><ellipse id="budShape" cx="170" cy="108" rx="12" ry="16" fill="#D9A0A8"/></g>
+      <g id="g6" transform="translate(170 100)"></g>
+    </svg>
+  </div>
+
+  <div class="card fade">
+    <div class="letter-head">─ 寫給第 <span id="dayN"></span> 天的你 ─</div>
+    <div class="letter" id="letterBox"></div>
+  </div>
+
+  <div class="water-zone" id="waterZone">
+    <div class="drop-hint" id="dropHint">💧</div><br>
+    <button class="water-btn" id="waterBtn" onclick="water()">為它澆一點水</button>
+    <div class="water-sub" id="waterSub">它在等你</div>
+  </div>
+  <div class="care card" id="careBox" style="margin-top:0">
+    <h3 class="ok">✓ 今天適合</h3><ul id="eatList"></ul>
+    <h3 class="no">✗ 今天先避開</h3><ul id="avoidList"></ul>
+    <p class="fine">依懷孕週數不同，實際節奏請以醫師建議為準。</p>
+  </div>
+
+  <button id="reviewBtn" class="btn" style="display:none" onclick="openReview()">🌸 看看這三十天</button>
+
+  <div class="card journal">
+    <div class="letter-head">─ 留一句話給自己 ─</div>
+    <textarea id="jTxt" placeholder="想說什麼都可以，只有你看得到。"></textarea>
+    <div class="saved" id="jSaved"></div>
+    <p class="hint">這些字只存在你的手機裡。</p>
+  </div>
+
+  <details class="drawer">
+    <summary>⚕️ 什麼狀況要立刻就醫</summary>
+    <div class="inner">
+      <div class="warn">惡露超過四週仍鮮紅出血｜出血有異味或發燒｜突然大量出血或血塊｜下腹持續疼痛｜超過兩個月月經未恢復——<b>任何一項出現，不要等，馬上回診。</b></div>
+      <p style="font-size:.85em">食補能陪伴日常，但不能取代醫療。不確定的時候，回診永遠是最安全的選擇。</p>
+    </div>
+  </details>
+  <details class="drawer">
+    <summary>📖 常見問題</summary>
+    <div class="inner">
+      <div class="qa"><b>惡露多久才乾淨？</b><br>約二至四週逐漸減少，顏色鮮紅→粉紅→咖啡→淡黃白。藥流通常較長，屬正常。</div>
+      <div class="qa"><b>可以洗頭嗎？</b><br>可以，洗完立刻吹乾即可。</div>
+      <div class="qa"><b>滴雞精何時可以喝？</b><br>第一週結束後即可，選成分單純的版本。</div>
+      <div class="qa"><b>可以哭嗎？</b><br>可以。疏通比壓抑重要。</div>
+      <div class="linkline"><a href="https://soup-broth.com/blog">更多完整知識 →</a></div>
+    </div>
+  </details>
+  <details class="drawer">
+    <summary>💬 想找人問問</summary>
+    <div class="inner" style="text-align:center">
+      <p style="margin-bottom:12px">私訊蒔補的 LINE，我們會認真回答，<br>不會強迫你買任何東西。</p>
+      <a class="btn" style="background:#06c755;margin-top:4px" href="https://lin.ee/S75A533">私訊蒔補 LINE</a>
+      <p style="margin-top:16px;font-size:.85em"><a href="https://soup-broth.com/product/坐小月調養組合" style="color:#8B6F47">如果需要調養支援：看四週食補組合 →</a></p>
+    </div>
+  </details>
+
+  <div class="foot">本工具提供傳統漢方食補參考資訊，非醫療工具，不具醫療效果，不取代醫師診療。<br>© 蒔補煲心湯｜soup-broth.com</div>
+</section>
+
+<div class="modal hidden" id="reviewModal">
+  <div class="modal-box">
+    <canvas id="reviewCanvas" width="640" height="960"></canvas>
+    <div class="modal-actions">
+      <button class="close" onclick="closeReview()">關閉</button>
+      <button class="save" onclick="downloadCard()">存到手機</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const LETTERS=[
+"今天，什麼都不用做。\n躺著，就是你現在最重要的事。\n我們在這裡，你不是一個人。",
+"身體正在替你處理很多事，\n即使你只是躺著。\n交給它，你只要休息。",
+"第三天了。\n如果眼淚想來，就讓它來。\n哭完，記得喝一口溫水。",
+"今天也許有人說了不合時宜的話。\n他們不懂沒關係，\n你不需要向任何人解釋。",
+"喝一碗溫熱的粥吧。\n不為了什麼，\n只因為你值得被溫柔對待。",
+"快一週了。\n身體在慢慢把不需要的放下，\n心，也可以練習。",
+"第七天。\n這一週你撐過來了——\n光是這樣，就已經很了不起。",
+"新的一週。\n惡露少一點了嗎？\n身體準備好開始接受滋養了。",
+"今天可以喝一碗真正燉煮的湯。\n有香氣、有溫度的那種。\n你聞得到，就代表食慾在回來。",
+"有些日子會突然很難過，\n沒有原因。\n那不是退步，是心在整理。",
+"第十一天。\n試著到窗邊曬一點太陽，\n五分鐘就好。",
+"今天替自己做一件小事：\n洗個熱水澡，記得吹乾頭髮。\n小事累積起來，就是照顧。",
+"如果今天胃口好一點了，\n替身體開心一下。\n它一直很努力。",
+"兩週了。\n回頭看，你已經走了一段路。\n慢，但每一步都算數。",
+"半個月。\n植物長葉子了，你看。\n有些變化安靜到看不見，但一直在發生。",
+"今天想跟你說：\n那不是你的錯。\n從來都不是。",
+"睡得好嗎？\n睡不好也沒關係，\n躺著閉眼，身體一樣在休息。",
+"第十八天。\n也許今天可以在家裡慢慢走一走，\n給身體一點溫和的移動。",
+"想吃什麼，就順著身體。\n它現在說的話，\n比任何食譜都準。",
+"第二十天。\n如果有人願意聽，可以說一點；\n不想說，沉默也完全可以。",
+"三週了。\n氣色是不是好一點了？\n照照鏡子，跟自己打個招呼。",
+"今天的你，\n比第一天的你有力氣多了。\n這是你自己掙回來的。",
+"含苞了。\n有些準備，需要安靜的醞釀。\n你也是。",
+"第二十四天。\n開始想之後的事了嗎？\n不急，想到哪算哪。",
+"這幾天，把作息慢慢調回來。\n不是為了誰，\n是為了你想過的日子。",
+"快滿月了。\n這段時間你對自己的照顧，\n身體都記得。",
+"第二十七天。\n如果月經還沒來，先不用擔心，\n它有自己的節奏。",
+"倒數第三天。\n花快開了。\n你也快走完這一段了。",
+"明天，花就要開了。\n謝謝你這三十天，\n沒有放棄照顧自己。",
+"花開了。\n三十天，你陪自己走完了。\n\n這朵花是你的——\n它記得你哭過的夜、\n喝過的每一碗湯、\n和每一次仍然選擇照顧自己的你。\n\n往後的日子，慢慢來。\n我們一直都在。"
+];
+const AFTER=["花開之後，日子繼續。\n想我們的時候，隨時回來看看它。","照顧自己這件事，\n沒有截止日。","如果開始想備孕的事了，\n等月經穩定兩三個週期，\n再慢慢規劃，不急。"];
+
+const STAGES=[
+ {max:3,g:1,name:'種子・靜靜落土',eat:['溫熱開水','清淡米粥','溫和湯品'],avoid:['冰飲與生冷','人參等大補','急著起身做事']},
+ {max:7,g:2,name:'發芽・先清再補',eat:['清燉雞湯、鱸魚湯','溫熱米粥、山藥粥','溫和漢方茶飲'],avoid:['麻油雞（還太早）','人參、高麗參','辛辣與生冷']},
+ {max:14,g:3,name:'抽葉・開始滋養',eat:['八珍藥膳湯','豬肝、黑豆豬腳湯','山藥排骨湯'],avoid:['生化湯過量（依醫囑）','冰飲','劇烈運動']},
+ {max:21,g:4,name:'茁壯・穩穩地補',eat:['八珍藥膳湯','麻油雞（可以了）','杜仲相關湯品'],avoid:['熬夜','提重物','冷氣直吹']},
+ {max:27,g:5,name:'含苞・鞏固底子',eat:['固元漢方茶飲','均衡溫熱飲食','溫和的散步'],avoid:['過度勞累','對自己太苛刻']},
+ {max:9999,g:6,name:'開花・回到日常',eat:['日常溫補茶飲','想吃的溫熱食物','正常作息'],avoid:['勉強自己「應該好了」']}
+];
+
+const SEASONS={
+  winter:{name:'山茶花',months:[12,1,2],petals:['#B03A3A','#C24A4A','#B03A3A','#C24A4A','#9C2E2E'],core:'#F2D6A0',bg:['#4A2A2A','#6B3838']},
+  spring:{name:'櫻花',    months:[3,4,5], petals:['#F3C4CC','#F7D6DC','#F3C4CC','#F7D6DC','#EEB6C0'],core:'#F2D6A0',bg:['#5C4055','#7A5468']},
+  summer:{name:'桔梗',    months:[6,7,8], petals:['#6E7FC7','#7D8DD1','#6E7FC7','#7D8DD1','#5F70B8'],core:'#F2E6A0',bg:['#2E4A5C','#3D6478']},
+  autumn:{name:'木棉花',  months:[9,10,11],petals:['#E07B39','#E88F52','#E07B39','#E88F52','#D46A28'],core:'#F2C060',bg:['#5C3A2A','#7A4F38']}
+};
+function seasonOf(dateStr){
+  const m=new Date(dateStr+'T00:00:00').getMonth()+1;
+  for(const k in SEASONS)if(SEASONS[k].months.includes(m))return SEASONS[k];
+  return SEASONS.spring;
+}
+
+const $=id=>document.getElementById(id);
+const KEY='shibu_plant';
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}}
+function save(d){localStorage.setItem(KEY,JSON.stringify(d))}
+
+function start(){
+  const v=$('d0').value;
+  if(!v){alert('請先選擇日期');return}
+  save({d0:v,water:{},journal:{},bloomed:false});
+  render();
+}
+
+function dayNum(d0){return Math.max(1,Math.floor((Date.now()-new Date(d0+'T00:00:00'))/864e5)+1)}
+
+function paintBud(season){$('budShape').setAttribute('fill',season.petals[0])}
+function paintFlower(season,animate){
+  const g=$('g6');g.innerHTML='';
+  const positions=[0,72,144,216,288];
+  positions.forEach((deg,i)=>{
+    const p=document.createElementNS('http://www.w3.org/2000/svg','ellipse');
+    p.setAttribute('rx','13');p.setAttribute('ry','22');
+    p.setAttribute('transform',`rotate(${deg}) translate(0 -16)`);
+    p.setAttribute('fill',season.petals[i]);
+    if(animate){p.classList.add('petal');p.style.animationDelay=(i*.09)+'s'}
+    g.appendChild(p);
+  });
+  const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+  c.setAttribute('r','10');c.setAttribute('fill',season.core);
+  if(animate){c.classList.add('petal');c.style.animationDelay='.5s'}
+  g.appendChild(c);
+}
+
+function confettiBurst(){
+  const emojis=['🌸','✨','🌿','💮'];
+  for(let i=0;i<18;i++){
+    const s=document.createElement('div');
+    s.className='confetti';s.textContent=emojis[i%emojis.length];
+    s.style.left=Math.random()*100+'vw';
+    s.style.animationDuration=(2.6+Math.random()*1.6)+'s';
+    s.style.fontSize=(.9+Math.random()*.8)+'em';
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),4400);
+  }
+}
+
+function render(){
+  const st=load();
+  if(!st.d0){$('onboard').classList.remove('hidden');$('main').classList.add('hidden');return}
+  $('onboard').classList.add('hidden');$('main').classList.remove('hidden');
+  const n=dayNum(st.d0);
+  const capped=Math.min(n,30);
+  const stage=STAGES.find(s=>capped<=s.max)||STAGES[5];
+  const season=seasonOf(st.d0);
+
+  const h=new Date().getHours();
+  $('greet').textContent=h>=23||h<5?'夜深了，還醒著嗎':h<11?'早安，新的一天':h<18?'午後好':'晚上好';
+  $('dayTxt').textContent=n<=30?`第 ${n} 天`:`第 30 天之後・第 ${n} 天`;
+  $('stageName').textContent=stage.name+`（${season.name}）`;
+  $('dayN').textContent=Math.min(n,30);
+  $('letterBox').textContent=n<=30?LETTERS[n-1]:AFTER[(n-31)%AFTER.length];
+
+  for(let i=1;i<=6;i++)$('g'+i).style.opacity=0;
+  for(let i=1;i<=stage.g;i++)$('g'+i).style.opacity=1;
+  if(stage.g>=5)paintBud(season);
+
+  if(stage.g===6){
+    const justBloomed=!st.bloomed;
+    paintFlower(season,justBloomed);
+    $('g6').style.opacity=1;
+    if(justBloomed){st.bloomed=true;save(st);confettiBurst()}
+    $('reviewBtn').style.display='block';
+  } else {
+    $('reviewBtn').style.display='none';
+  }
+
+  $('eatList').innerHTML=stage.eat.map(x=>`<li>${x}</li>`).join('');
+  $('avoidList').innerHTML=stage.avoid.map(x=>`<li>${x}</li>`).join('');
+
+  const today=new Date().toISOString().slice(0,10);
+  if(st.water[today]){
+    $('waterBtn').textContent='✓ 今天已經照顧過它了';
+    $('waterBtn').classList.add('done');$('waterBtn').classList.remove('needs');
+    $('dropHint').style.display='none';
+    $('waterSub').textContent='明天，它會繼續等你';
+    $('careBox').classList.add('open');
+  } else {
+    $('waterBtn').textContent='為它澆一點水';
+    $('waterBtn').classList.remove('done');$('waterBtn').classList.add('needs');
+    $('dropHint').style.display='inline-block';
+    $('waterSub').textContent='它在等你';
+  }
+  $('jTxt').value=st.journal[today]||'';
+}
+
+function water(){
+  const st=load();const today=new Date().toISOString().slice(0,10);
+  st.water[today]=1;save(st);
+  const p=$('plant');p.classList.remove('sway');void p.offsetWidth;p.classList.add('sway');
+  const box=$('stageBox');
+  ['✨','💧','🌿'].forEach((e,i)=>{const s=document.createElement('div');s.className='sparkle';s.textContent=e;
+    s.style.left=(38+i*16)+'%';s.style.top=(30+i*8)+'%';s.style.animationDelay=(i*.18)+'s';box.appendChild(s);setTimeout(()=>s.remove(),2000)});
+  render();
+  setTimeout(()=>$('careBox').classList.add('open'),700);
+}
+
+let jt;
+document.addEventListener('input',e=>{
+  if(e.target.id!=='jTxt')return;
+  clearTimeout(jt);
+  jt=setTimeout(()=>{const st=load();const today=new Date().toISOString().slice(0,10);
+    st.journal[today]=e.target.value;save(st);
+    $('jSaved').textContent='已悄悄存好';setTimeout(()=>$('jSaved').textContent='',1600)},600);
+});
+
+function openReview(){
+  const st=load();
+  const season=seasonOf(st.d0);
+  const waterDays=Object.keys(st.water||{}).length;
+  const journals=Object.values(st.journal||{}).filter(t=>t&&t.trim().length>0);
+  const quote=journals.length?journals[Math.floor(Math.random()*journals.length)]:'';
+
+  const cv=$('reviewCanvas');const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+
+  const grad=ctx.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0,season.bg[0]);grad.addColorStop(1,season.bg[1]);
+  ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+
+  ctx.strokeStyle='rgba(255,255,255,.12)';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.arc(W-70,110,90,0,7);ctx.stroke();
+  ctx.beginPath();ctx.arc(70,H-140,110,0,7);ctx.stroke();
+
+  ctx.textAlign='center';
+
+  ctx.font='24px "Noto Serif TC","PingFang TC",serif';
+  ctx.fillStyle='rgba(245,237,224,.75)';
+  ctx.fillText('蒔補煲心 · 蒔一棵植物',W/2,90);
+
+  const cx=W/2,cy=280;
+  for(let i=0;i<5;i++){
+    const ang=i*(Math.PI*2/5)-Math.PI/2;
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(ang);
+    ctx.fillStyle=season.petals[i];
+    ctx.beginPath();ctx.ellipse(0,-46,26,44,0,0,7);ctx.fill();
+    ctx.restore();
+  }
+  ctx.fillStyle=season.core;ctx.beginPath();ctx.arc(cx,cy,20,0,7);ctx.fill();
+
+  ctx.font='30px "Noto Serif TC","PingFang TC",serif';
+  ctx.fillStyle='#FDF8EE';
+  ctx.fillText(`${season.name}開了`,W/2,410);
+
+  ctx.font='17px "Noto Serif TC","PingFang TC",serif';
+  ctx.fillStyle='rgba(245,237,224,.85)';
+  const dateTxt=new Date(st.d0+'T00:00:00').toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric'});
+  ctx.fillText(`${dateTxt}　種下的`,W/2,450);
+
+  ctx.font='19px "Noto Serif TC","PingFang TC",serif';
+  ctx.fillStyle='#F5EDE0';
+  ctx.fillText(`這三十天裡，你照顧了自己 ${waterDays} 次`,W/2,540);
+
+  if(quote){
+    ctx.font='16px "Noto Serif TC","PingFang TC",serif';
+    ctx.fillStyle='rgba(245,237,224,.9)';
+    wrapText(ctx,'「'+quote.slice(0,40)+'」',W/2,610,W-140,26);
+  }
+
+  ctx.font='15px "Noto Serif TC","PingFang TC",serif';
+  ctx.fillStyle='rgba(245,237,224,.6)';
+  ctx.fillText('你不用說出來，也值得被好好照顧',W/2,H-70);
+  ctx.font='13px "Noto Serif TC","PingFang TC",serif';
+  ctx.fillText('soup-broth.com',W/2,H-40);
+
+  $('reviewModal').classList.remove('hidden');
+}
+function wrapText(ctx,text,x,y,maxW,lh){
+  let line='',yy=y;
+  for(const ch of text){
+    const test=line+ch;
+    if(ctx.measureText(test).width>maxW&&line){ctx.fillText(line,x,yy);line=ch;yy+=lh}
+    else line=test;
+  }
+  if(line)ctx.fillText(line,x,yy);
+}
+function closeReview(){$('reviewModal').classList.add('hidden')}
+function downloadCard(){
+  const cv=$('reviewCanvas');
+  const a=document.createElement('a');
+  a.download='蒔補煲心-三十天回顧.png';
+  a.href=cv.toDataURL('image/png');
+  a.click();
+}
+
+render();
+</script>
+</body>
+</html>
