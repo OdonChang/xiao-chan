@@ -183,6 +183,113 @@ body::before {
   line-height: 1.9;
 }
 
+/* ── COMPANION INVITE ── */
+.companion {
+  max-width: 620px;
+  margin: 0 64px auto 64px;
+  padding: 0 24px;
+}
+
+.companion-card {
+  position: relative;
+  background: linear-gradient(155deg, var(--teal) 0%, #24544469 100%), var(--ink);
+  background-blend-mode: normal;
+  background-color: #1F4438;
+  border-radius: 22px;
+  padding: 52px 36px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.companion-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 25% 20%, rgba(212,169,122,0.16) 0%, transparent 55%),
+              radial-gradient(ellipse at 80% 85%, rgba(212,169,122,0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.companion-leaf {
+  font-family: 'Playfair Display', serif;
+  font-size: 30px;
+  color: var(--gold-light);
+  margin-bottom: 18px;
+  position: relative;
+  animation: leafSway 4s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes leafSway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(8deg); }
+}
+
+.companion-eyebrow {
+  font-family: 'Playfair Display', serif;
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.companion-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: clamp(20px, 3.4vw, 26px);
+  font-weight: 600;
+  color: var(--cream);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.companion-title em {
+  font-style: normal;
+  color: var(--gold-light);
+}
+
+.companion-desc {
+  font-size: clamp(14px, 1.2vw, 16px);
+  color: rgba(245,235,224,0.72);
+  line-height: 1.9;
+  margin-bottom: 30px;
+  position: relative;
+  font-weight: 300;
+}
+
+.companion-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--gold-light);
+  color: #1F4438;
+  padding: 16px 34px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-family: 'Noto Serif TC', serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+}
+
+.companion-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.companion-sub {
+  margin-top: 18px;
+  font-size: 12.5px;
+  color: rgba(245,235,224,0.5);
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
 /* ── SECTION COMMON ── */
 .section {
   padding: 72px 24px;
@@ -729,6 +836,8 @@ body::before {
   .week-badge .num { font-size: 32px; }
   .timeline { padding: 28px 20px; }
   .do-dont { grid-template-columns: 1fr; }
+  .companion { margin: 0 auto; padding: 0 20px; }
+  .companion-card { padding: 40px 24px; }
 }
 
 /* ── SCROLL REVEAL ── */
@@ -786,6 +895,28 @@ body::before {
     這個頁面是專門為已經購買組合包的你設計的。<br>
     每週打開對照一次就好，不需要一次全部讀完。
   </p>
+</div>
+
+<!-- ══ COMPANION INVITE ══ -->
+<div class="companion reveal">
+  <div class="companion-card">
+    <div class="companion-leaf">🌱</div>
+    <div class="companion-eyebrow">額外準備給你的</div>
+    <h3 class="companion-title">
+      接下來的三十天，<br>
+      我們陪你<em>蒔一棵植物</em>。
+    </h3>
+    <p class="companion-desc">
+      這個調養日曆之外，我們還做了一個小工具——<br>
+      輸入日期，它會陪你走完這三十天。<br>
+      每天一封短信，一次澆水的儀式，<br>
+      到第三十天，看著花，慢慢開。
+    </p>
+    <a href="https://odonchang.github.io/xiao-chan/plant.html" class="companion-btn" target="_blank" rel="noopener">
+      開始這段陪伴
+    </a>
+    <p class="companion-sub">不需要下載任何東西，點開就能用</p>
+  </div>
 </div>
 
 <!-- ══ WEEK CARDS ══ -->
