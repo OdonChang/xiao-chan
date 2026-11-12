@@ -10,10 +10,10 @@
 <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22%E8%92%94%E4%B8%80%E6%A3%B5%E6%A4%8D%E7%89%A9%22%2C%22short_name%22%3A%22%E8%92%94%E4%B8%80%E6%A3%B5%E6%A4%8D%E7%89%A9%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23FAF6F0%22%2C%22theme_color%22%3A%22%23FAF6F0%22%7D">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%235C4434'/%3E%3Ccircle cx='50' cy='58' r='16' fill='%23E8B4BC'/%3E%3Cpath d='M50 58 V38' stroke='%237A9B7E' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M50 48 Q36 42 32 28 Q46 30 50 44' fill='%238FB394'/%3E%3Cpath d='M50 48 Q64 42 68 28 Q54 30 50 44' fill='%237A9B7E'/%3E%3C/svg%3E">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%235C4434'/%3E%3Ccircle cx='50' cy='58' r='16' fill='%23E8B4BC'/%3E%3Cpath d='M50 58 V38' stroke='%237A9B7E' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M50 48 Q36 42 32 28 Q46 30 50 44' fill='%238FB394'/%3E%3Cpath d='M50 48 Q64 42 68 28 Q54 30 50 44' fill='%237A9B7E'/%3E%3C/svg%3E">
-<title>蒔一棵植物｜30天陪伴・蒔補煲心</title>
+<title>蒔一棵植物｜30天陪伴・蒔補</title>
 <meta name="description" content="接下來的三十天，我們陪你蒔一棵植物。它會跟著你一天一天慢慢長，就像你正在慢慢好起來。">
 <!-- ============================================================
-  蒔補煲心｜蒔一棵植物 v3.0
+  蒔補｜蒔一棵植物 v3.0
   新增：四季花種對應種下月份｜開花花瓣綻放動畫｜30天回顧卡（canvas生成可下載）
   部署：GitHub Pages。給接續模型：TODO 標記處可擴充；法規見 Shibu_Handbook.md
   禁：補氣血/暖宮/活血/療效/修復｜語感：短句、不說教、不強迫正向
@@ -104,7 +104,7 @@ details.drawer .inner{padding:4px 20px 18px;font-size:.92em;color:#4a3d33}
 <body>
 
 <section id="onboard" class="wrap fade">
-  <div class="logo">蒔補煲心 SHIBU</div>
+  <div class="logo">蒔補 SHIBU</div>
   <h1>接下來的三十天，<br>我們陪你蒔一棵植物。</h1>
   <p class="intro">「蒔」，是栽種的意思。<br>它會跟著你，一天一天慢慢長。<br>不用照顧得很完美——<br>它不會枯萎，只會等你。</p>
   <input type="date" id="d0">
@@ -388,7 +388,7 @@ function openReview(){
 
   ctx.font='24px "Noto Serif TC","PingFang TC",serif';
   ctx.fillStyle='rgba(245,237,224,.75)';
-  ctx.fillText('蒔補煲心 · 蒔一棵植物',W/2,90);
+  ctx.fillText('蒔補 · 蒔一棵植物',W/2,90);
 
   const cx=W/2,cy=280;
   for(let i=0;i<5;i++){
@@ -440,7 +440,7 @@ function closeReview(){$('reviewModal').classList.add('hidden')}
 function downloadCard(){
   const cv=$('reviewCanvas');
   const a=document.createElement('a');
-  a.download='蒔補煲心-三十天回顧.png';
+  a.download='蒔補-三十天回顧.png';
   a.href=cv.toDataURL('image/png');
   a.click();
 }
